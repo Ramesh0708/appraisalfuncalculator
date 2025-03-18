@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('HikeBoom loaded at', new Date().toLocaleTimeString());
 
+    // Initialize Leaflet map
+    const map = L.map('map').setView([20, 0], 2); // World view
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 18
+    }).addTo(map);
+
     const form = document.getElementById('appraisalForm');
     if (form) {
-        form.addEventListener('submit', function(event) {
+        form.addEventListener('submit', async function(event) {
             event.preventDefault();
             console.log('Form submitted');
 
@@ -48,9 +55,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             gauge.innerHTML = `<div style="width: ${Math.min(hike, 100)}%;"></div>`;
 
-            let feedbackText, nextStepsOptions;
+            // Map zoom
+            if (location) {
+                try {
+                    const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(location)}&format=json&limit=1`);
+                    const data = await response.json();
+                    if (data.length > 0) {
+                        const { lat, lon } = data[0];
+                        map.flyTo([lat, lon], 10, { duration: 2 });
+                    } else {
+                        console.log('Location not found, staying at world view');
+                    }
+                } catch (error) {
+                    console.error('Map error:', error);
+                }
+            }
 
-            // Role-based advice
+            let feedbackText, nextStepsOptions;
             const isEngineer = position.includes('engineer') || position.includes('developer');
             const isManager = position.includes('manager') || position.includes('lead');
             const isDesigner = position.includes('design') || position.includes('ux');
