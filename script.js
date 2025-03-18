@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-            console.log('Boom triggered!');
+            console.log('Form submitted');
 
             const lastCtc = parseFloat(document.getElementById('lastCtc').value);
             const currentCtc = parseFloat(document.getElementById('currentCtc').value);
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const location = document.getElementById('location').value.trim();
 
             if (isNaN(lastCtc) || isNaN(currentCtc) || lastCtc <= 0 || currentCtc < 0) {
-                alert('Gimme valid cash, fam!');
+                alert('Please enter valid positive CTC values!');
                 return;
             }
 
@@ -22,52 +22,52 @@ document.addEventListener('DOMContentLoaded', () => {
             const hikePercentage = document.getElementById('hikePercentage');
             const gauge = document.getElementById('hikeGauge');
             const feedback = document.getElementById('appraisalFeedback');
-            const shareButton = document.getElementById('shareAppraisal');
+            const whatsNext = document.getElementById('whatsNext');
+            const nextSteps = document.getElementById('nextSteps');
 
-            // Slot machine madness
             let spins = 0;
             const spinInterval = setInterval(() => {
                 hikePercentage.textContent = (Math.random() * 100).toFixed(2);
                 spins++;
-                if (spins >= 15) {
+                if (spins >= 10) {
                     clearInterval(spinInterval);
                     hikePercentage.textContent = hike.toFixed(2);
-                    hikePercentage.classList.remove('slot'); // Stop spinning
-                    shareButton.style.display = 'inline-block';
-
-                    // Gauge boom
-                    const gaugeWidth = Math.min(hike, 100);
-                    gauge.innerHTML = `<div style="width: ${gaugeWidth}%; background: linear-gradient(to right, #ffcc00, #ff00cc); height: 100%; border-radius: 10px;"></div>`;
+                    hikePercentage.style.animation = 'none';
                 }
             }, 100);
 
-            // Confetti explosion
             confetti({
-                particleCount: 150,
-                spread: 90,
-                origin: { y: 0.5 },
-                colors: ['#ff00cc', '#3333ff', '#ffcc00']
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
             });
 
             resultDiv.style.display = 'block';
             resultDiv.style.opacity = '0';
             setTimeout(() => resultDiv.style.opacity = '1', 10);
 
-            let feedbackText;
-            if (hike < 10) feedbackText = "Low boom—grind harder!";
-            else if (hike < 15) feedbackText = "Mid-tier boom—solid flex!";
-            else if (hike < 20) feedbackText = "High boom—cashin’ in!";
-            else feedbackText = "MEGA BOOM—raise royalty!";
-            feedback.textContent = feedbackText + (position && location ? ` (${position} in ${location})` : '');
+            gauge.innerHTML = `<div style="width: ${Math.min(hike, 100)}%;"></div>`;
 
-            shareButton.onclick = () => {
-                const shareText = `I boomed a ${hike.toFixed(2)}% hike on HikeBoom! Spin yours: https://hikeboom.netlify.app/`;
-                navigator.clipboard.writeText(shareText).then(() => alert('Boom copied—blast it everywhere!'));
-            };
+            let feedbackText, nextStepsText;
+            if (hike < 10) {
+                feedbackText = "Below average—room for improvement.";
+                nextStepsText = "Consider negotiating with your manager or upskilling with a course to boost your value.";
+            } else if (hike < 15) {
+                feedbackText = "Average hike—steady performance.";
+                nextStepsText = "Keep up the good work and explore side projects to stand out next time.";
+            } else if (hike < 20) {
+                feedbackText = "Good hike—well done!";
+                nextStepsText = "Leverage this raise to invest in professional growth or savings.";
+            } else {
+                feedbackText = "Excellent hike—top-tier result!";
+                nextStepsText = "Celebrate, then aim higher—maybe a leadership role or new challenge.";
+            }
+            feedback.textContent = feedbackText + (position && location ? ` (For ${position} in ${location})` : '');
+            nextSteps.textContent = nextStepsText;
+            whatsNext.style.display = 'block';
         });
     }
 
-    // Peek toggles
     document.getElementById('toggleLastCtc').addEventListener('click', () => toggleVisibility('lastCtc'));
     document.getElementById('toggleCurrentCtc').addEventListener('click', () => toggleVisibility('currentCtc'));
 
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = 'Hide';
         } else {
             input.type = 'password';
-            button.textContent = 'Peek';
+            button.textContent = 'Show';
         }
     }
 });
