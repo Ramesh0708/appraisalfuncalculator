@@ -79,16 +79,20 @@ body {
 }
 
 .footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     padding: 20px;
     color: #666;
+    width: 100%;
 }
 
 .footer-text {
-    margin: 0 auto;
+    margin: 0;
 }
-
 .footer a {
     color: #007bff;
     text-decoration: none;
+    margin-left: 10px;
 }
