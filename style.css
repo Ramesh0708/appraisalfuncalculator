@@ -1,8 +1,9 @@
 body {
-    background: linear-gradient(135deg, #ff00cc, #3333ff); /* Neon gradient */
+    background: linear-gradient(135deg, #ff00cc, #3333ff);
     color: #fff;
     font-family: 'Press Start 2P', cursive;
     overflow-x: hidden;
+    margin: 0; /* Reset */
 }
 
 .container {
@@ -35,7 +36,7 @@ body {
 }
 
 .boom-label {
-    color: #ffcc00; /* Yellow */
+    color: #ffcc00;
     text-shadow: 0 0 5px #ffcc00;
 }
 
