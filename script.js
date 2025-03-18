@@ -1,10 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('HikeBoom loaded at', new Date().toLocaleTimeString());
 
-    // Initialize Leaflet map
-    const map = L.map('map').setView([20, 0], 2); // World view
+    // Initialize map
+    const map = L.map('map', {
+        zoomControl: false, // Cleaner look
+        attributionControl: false // Remove default attribution
+    }).setView([20, 0], 2); // World view
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         maxZoom: 18
     }).addTo(map);
 
@@ -65,9 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         map.flyTo([lat, lon], 10, { duration: 2 });
                     } else {
                         console.log('Location not found, staying at world view');
+                        map.setView([20, 0], 2); // Reset to world
                     }
                 } catch (error) {
                     console.error('Map error:', error);
+                    map.setView([20, 0], 2); // Fallback
                 }
             }
 
