@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM loaded at', new Date().toLocaleTimeString());
+    console.log('HikeBoom loaded at', new Date().toLocaleTimeString());
 
     const form = document.getElementById('appraisalForm');
     if (form) {
         form.addEventListener('submit', function(event) {
             event.preventDefault();
-            console.log('Form submitted');
+            console.log('Boom triggered!');
 
             const lastCtc = parseFloat(document.getElementById('lastCtc').value);
             const currentCtc = parseFloat(document.getElementById('currentCtc').value);
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const location = document.getElementById('location').value.trim();
 
             if (isNaN(lastCtc) || isNaN(currentCtc) || lastCtc <= 0 || currentCtc < 0) {
-                alert('Please enter valid positive CTC values!');
+                alert('Gimme valid cash, fam!');
                 return;
             }
 
@@ -24,28 +24,29 @@ document.addEventListener('DOMContentLoaded', () => {
             const feedback = document.getElementById('appraisalFeedback');
             const shareButton = document.getElementById('shareAppraisal');
 
-            // Slot machine effect
+            // Slot machine madness
             let spins = 0;
             const spinInterval = setInterval(() => {
                 hikePercentage.textContent = (Math.random() * 100).toFixed(2);
                 spins++;
-                if (spins >= 10) {
+                if (spins >= 15) {
                     clearInterval(spinInterval);
                     hikePercentage.textContent = hike.toFixed(2);
-                    hikePercentage.style.animation = 'none';
+                    hikePercentage.classList.remove('slot'); // Stop spinning
                     shareButton.style.display = 'inline-block';
 
-                    // Gauge animation
-                    gauge.style.setProperty('--gauge-width', `${Math.min(hike, 100)}%`);
-                    gauge.innerHTML = `<div style="width: ${Math.min(hike, 100)}%; background: #28a745; height: 100%; border-radius: 10px;"></div>`;
+                    // Gauge boom
+                    const gaugeWidth = Math.min(hike, 100);
+                    gauge.innerHTML = `<div style="width: ${gaugeWidth}%; background: linear-gradient(to right, #ffcc00, #ff00cc); height: 100%; border-radius: 10px;"></div>`;
                 }
             }, 100);
 
-            // Confetti blast
+            // Confetti explosion
             confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
+                particleCount: 150,
+                spread: 90,
+                origin: { y: 0.5 },
+                colors: ['#ff00cc', '#3333ff', '#ffcc00']
             });
 
             resultDiv.style.display = 'block';
@@ -53,20 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => resultDiv.style.opacity = '1', 10);
 
             let feedbackText;
-            if (hike < 10) feedbackText = "Oof, below average—time to hustle!";
-            else if (hike < 15) feedbackText = "Solid average—steady wins!";
-            else if (hike < 20) feedbackText = "Nice one—above the curve!";
-            else feedbackText = "Jackpot! You’re killing it!";
-            feedback.textContent = feedbackText + (position && location ? ` (For ${position} in ${location})` : '');
+            if (hike < 10) feedbackText = "Low boom—grind harder!";
+            else if (hike < 15) feedbackText = "Mid-tier boom—solid flex!";
+            else if (hike < 20) feedbackText = "High boom—cashin’ in!";
+            else feedbackText = "MEGA BOOM—raise royalty!";
+            feedback.textContent = feedbackText + (position && location ? ` (${position} in ${location})` : '');
 
             shareButton.onclick = () => {
-                const shareText = `I scored a ${hike.toFixed(2)}% appraisal hike! Spin yours at: https://appraisal-fun-calculator.netlify.app/`;
-                navigator.clipboard.writeText(shareText).then(() => alert('Copied to clipboard!'));
+                const shareText = `I boomed a ${hike.toFixed(2)}% hike on HikeBoom! Spin yours: https://hikeboom.netlify.app/`;
+                navigator.clipboard.writeText(shareText).then(() => alert('Boom copied—blast it everywhere!'));
             };
         });
     }
 
-    // CTC visibility toggles
+    // Peek toggles
     document.getElementById('toggleLastCtc').addEventListener('click', () => toggleVisibility('lastCtc'));
     document.getElementById('toggleCurrentCtc').addEventListener('click', () => toggleVisibility('currentCtc'));
 
@@ -78,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
             button.textContent = 'Hide';
         } else {
             input.type = 'password';
-            button.textContent = 'Show';
+            button.textContent = 'Peek';
         }
     }
 });
