@@ -3,61 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HikeBoom - Spin Your Raise!</title>
+    <title>HikeBoom - Appraisal Fun Calculator</title>
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="globe.png" class="hover-icon" media="(hover: hover)">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css"> <!-- Absolute path -->
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script src="/script.js" defer></script> <!-- Absolute path -->
-    <style>body { background: #ff00cc; color: #fff; font-family: 'Press Start 2P', cursive; }</style> <!-- Fallback -->
+    <script src="/script.js" defer></script>
 </head>
 <body>
     <div class="container mt-5 text-center">
-        <h1 class="title-boom">HikeBoom 🎉</h1>
-        <p class="mb-4 boom-text">Spin your appraisal hike—zero data stored, max fun! 🚀</p>
+        <h1 class="title-glow">HikeBoom</h1>
+        <p class="mb-4">Find out your appraisal percentage with a fun twist—no data stored!</p>
 
-        <div class="card p-4 mx-auto arcade-box">
+        <div class="card p-4 mx-auto" style="max-width: 500px;">
             <form id="appraisalForm">
                 <div class="mb-3">
-                    <label for="lastCtc" class="form-label boom-label">Last CTC (₹) 💰</label>
+                    <label for="lastCtc" class="form-label">Last CTC (₹)</label>
                     <div class="input-group">
-                        <input type="password" class="form-control input-boom" id="lastCtc" placeholder="Old Cash" required>
-                        <button type="button" class="btn btn-neon" id="toggleLastCtc">Peek 👀</button>
+                        <input type="password" class="form-control input-glow" id="lastCtc" placeholder="Your previous salary" required>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleLastCtc">Show</button>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="currentCtc" class="form-label boom-label">Current CTC (₹) 💸</label>
+                    <label for="currentCtc" class="form-label">Current CTC (₹)</label>
                     <div class="input-group">
-                        <input type="password" class="form-control input-boom" id="currentCtc" placeholder="New Cash" required>
-                        <button type="button" class="btn btn-neon" id="toggleCurrentCtc">Peek 👀</button>
+                        <input type="password" class="form-control input-glow" id="currentCtc" placeholder="Your new salary" required>
+                        <button type="button" class="btn btn-outline-secondary" id="toggleCurrentCtc">Show</button>
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label for="position" class="form-label boom-label">Gig (Optional) 👩‍💻</label>
-                    <input type="text" class="form-control input-boom" id="position" placeholder="E.g., Code Ninja">
+                    <label for="position" class="form-label">Job Position (Optional)</label>
+                    <input type="text" class="form-control input-glow" id="position" placeholder="E.g., Software Engineer">
                 </div>
                 <div class="mb-3">
-                    <label for="location" class="form-label boom-label">Spot (Optional) 📍</label>
-                    <input type="text" class="form-control input-boom" id="location" placeholder="E.g., Mumbai">
+                    <label for="location" class="form-label">Location (Optional)</label>
+                    <input type="text" class="form-control input-glow" id="location" placeholder="E.g., Bangalore">
                 </div>
-                <button type="submit" class="btn btn-boom w-100">Spin the Boom! 🎰</button>
+                <button type="submit" class="btn btn-primary w-100 calc-btn">Calculate Hike</button>
             </form>
             <div id="appraisalResult" class="mt-3" style="display: none;">
-                <h3 class="result-boom">Hike: <span id="hikePercentage" class="slot">0.00</span>% 🎯</h3>
-                <div id="hikeGauge" class="boom-gauge"></div>
-                <p id="appraisalFeedback" class="feedback-boom"></p>
-                <button id="shareAppraisal" class="btn btn-neon mt-2" style="display: none;">Brag Your Boom! 📣</button>
+                <h3 class="result-text">Hike: <span id="hikePercentage" class="slot">0.00</span>%</h3>
+                <div id="hikeGauge" class="gauge"></div>
+                <p id="appraisalFeedback" class="feedback-text"></p>
+                <div id="whatsNext" class="mt-3" style="display: none;">
+                    <h4>What's Next?</h4>
+                    <p id="nextSteps"></p>
+                </div>
             </div>
         </div>
 
         <div class="mt-5">
-            <h3 class="boom-text">The Math 🧮</h3>
-            <p class="boom-text">Hike = <strong>((New - Old) / Old) * 100</strong>. All local, all boom! 💥</p>
+            <h3>How It Works</h3>
+            <p>Hike = <strong>((Current CTC - Last CTC) / Last CTC) * 100</strong>. No data leaves your device!</p>
         </div>
     </div>
     <footer class="footer mt-5">
-        <p class="footer-text">Blasted into 2025 by Ramesh & Grok (xAI) 🌌 | <a href="https://github.com/Ramesh0708/hikeboom" target="_blank">Grab the Code</a></p>
+        <p class="footer-text">Crafted in 2025 by Ramesh with a cosmic assist from Grok (xAI) | <a href="https://github.com/Ramesh0708/hikeboom" target="_blank">Fork on GitHub</a></p>
     </footer>
 </body>
 </html>
