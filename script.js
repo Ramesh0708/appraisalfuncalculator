@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const lastCtc = parseFloat(document.getElementById('lastCtc').value);
             const currentCtc = parseFloat(document.getElementById('currentCtc').value);
-            const position = document.getElementById('position').value.trim();
+            let position = document.getElementById('position').value.trim().toLowerCase();
             const location = document.getElementById('location').value.trim();
 
             if (isNaN(lastCtc) || isNaN(currentCtc) || lastCtc <= 0 || currentCtc < 0) {
@@ -48,22 +48,57 @@ document.addEventListener('DOMContentLoaded', () => {
 
             gauge.innerHTML = `<div style="width: ${Math.min(hike, 100)}%;"></div>`;
 
-            let feedbackText, nextStepsText;
+            let feedbackText, nextStepsOptions;
+
+            // Role-based advice
+            const isEngineer = position.includes('engineer') || position.includes('developer');
+            const isManager = position.includes('manager') || position.includes('lead');
+            const isDesigner = position.includes('design') || position.includes('ux');
+
             if (hike < 10) {
-                feedbackText = "Below average—room for improvement.";
-                nextStepsText = "Consider negotiating with your manager or upskilling with a course to boost your value.";
+                feedbackText = "Below average—there’s potential ahead!";
+                nextStepsOptions = [
+                    isEngineer ? "Polish your coding skills with a new project or certification—your next hike could soar!" :
+                    isManager ? "Focus on leadership training or team wins—your impact will shine through!" :
+                    isDesigner ? "Build a standout portfolio piece—your creativity deserves a bigger stage!" :
+                    "Upskill with a course or take on a high-visibility project—your worth is about to rise!",
+                    "Talk to your manager about growth opportunities—you’ve got this in the bag!",
+                    "Network internally for a bigger role—your next step is closer than you think!"
+                ];
             } else if (hike < 15) {
-                feedbackText = "Average hike—steady performance.";
-                nextStepsText = "Keep up the good work and explore side projects to stand out next time.";
+                feedbackText = "Average hike—solid ground to build on!";
+                nextStepsOptions = [
+                    isEngineer ? "Dive into a trending tech stack—your skills are your ticket to more!" :
+                    isManager ? "Mentor a teammate or lead a new initiative—your leadership is growing!" :
+                    isDesigner ? "Experiment with bold designs—your next review could be a masterpiece!" :
+                    "Take on a stretch goal or side hustle—your momentum is picking up!",
+                    "Ask for feedback to fine-tune your edge—you’re on the right track!",
+                    "Save a chunk of this raise—future you will thank you!"
+                ];
             } else if (hike < 20) {
-                feedbackText = "Good hike—well done!";
-                nextStepsText = "Leverage this raise to invest in professional growth or savings.";
+                feedbackText = "Good hike—your hard work’s paying off!";
+                nextStepsOptions = [
+                    isEngineer ? "Contribute to open source or mentor juniors—your expertise is gold!" :
+                    isManager ? "Pitch a big idea to execs—your vision’s ready to shine!" :
+                    isDesigner ? "Lead a design sprint—your flair’s about to level up!" :
+                    "Invest this raise wisely—build a safety net or dream fund!",
+                    "Set a bold career goal—your trajectory’s looking strong!",
+                    "Celebrate, then aim for a promotion—you’re crushing it!"
+                ];
             } else {
-                feedbackText = "Excellent hike—top-tier result!";
-                nextStepsText = "Celebrate, then aim higher—maybe a leadership role or new challenge.";
+                feedbackText = "Excellent hike—you’re a star!";
+                nextStepsOptions = [
+                    isEngineer ? "Build something groundbreaking—your skills are top-tier!" :
+                    isManager ? "Shape company strategy—your leadership’s unstoppable!" :
+                    isDesigner ? "Redefine the brand—your creativity’s on fire!" :
+                    "Negotiate equity or a bigger role—your value’s sky-high!",
+                    "Teach others your secrets—your success inspires!",
+                    "Treat yourself, then dream bigger—you’re just getting started!"
+                ];
             }
+
             feedback.textContent = feedbackText + (position && location ? ` (For ${position} in ${location})` : '');
-            nextSteps.textContent = nextStepsText;
+            nextSteps.textContent = nextStepsOptions[Math.floor(Math.random() * nextStepsOptions.length)];
             whatsNext.style.display = 'block';
         });
     }
